@@ -1,4 +1,5 @@
 # PHASE 2
+
 def convert_to_int(str)
   Integer(str)
 end
@@ -6,20 +7,32 @@ end
 # PHASE 3
 FRUITS = ["apple", "banana", "orange"]
 
+class NoCoffee < StandardError
+  def message
+    "I dont want coffee"
+  end
+end
+
+class 
+
 def reaction(maybe_fruit)
   if FRUITS.include?(maybe_fruit)
     puts "OMG, thanks so much for the #{maybe_fruit}!"
+  elsif maybe_fruit == "coffee"
+    puts "OMG, thanks so much for the coffee"
+  else
+    NoCoffee
   end
   # else 
   #   raise StandardError 
   # end
-  begin
-    maybe_fruit
-  rescue StandardError => e
-    raise e
-    puts e
-    retry
-  end
+  # begin
+  #   maybe_fruit
+  # rescue StandardError => e
+  #   raise StandardError unless FRUITS.include?(maybe_fruit)
+  #   puts "I dont like this fruit give me another one"
+  #   retry
+  # end
 
 end
 
