@@ -9,31 +9,39 @@ FRUITS = ["apple", "banana", "orange"]
 
 class NoCoffee < StandardError
   def message
-    "I dont want coffee"
+    "Sorry, I like coffee but I want a fruit instead"
   end
 end
 
-class 
+class NotFruit < StandardError
+  def message
+    "I dont like this fruit give me another one"
+  end
+end
 
 def reaction(maybe_fruit)
   if FRUITS.include?(maybe_fruit)
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  elsif maybe_fruit == "coffee"
-    puts "OMG, thanks so much for the coffee"
   else
-    NoCoffee
+    begin
+      maybe_fruit
+    rescue NotFruit => e
+      raise e.message unless FRUITS.include?(maybe_fruit)
+      puts "I don't like this fruit, give me coffee and I'll let you try again"
+      coffee = gets.chomp
+      retry
+    end
+  # elsif maybe_fruit == "coffee"
+  #   raise NoCoffee
+  # else
+  #   raise NotFruit
   end
-  # else 
-  #   raise StandardError 
-  # end
-  # begin
-  #   maybe_fruit
-  # rescue StandardError => e
-  #   raise StandardError unless FRUITS.include?(maybe_fruit)
-  #   puts "I dont like this fruit give me another one"
+
+
+  # rescue NoFruit => e
+  #   puts e.message
   #   retry
   # end
-
 end
 
 def feed_me_a_fruit
@@ -41,7 +49,7 @@ def feed_me_a_fruit
 
   puts "Feed me a fruit! (Enter the name of a fruit:)"
   maybe_fruit = gets.chomp
-  reaction(maybe_fruit) 
+  reaction(maybe_fruit)
 end
 
 feed_me_a_fruit
