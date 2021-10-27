@@ -7,11 +7,20 @@ end
 FRUITS = ["apple", "banana", "orange"]
 
 def reaction(maybe_fruit)
-  if FRUITS.include? maybe_fruit
+  if FRUITS.include?(maybe_fruit)
     puts "OMG, thanks so much for the #{maybe_fruit}!"
-  else 
-    raise StandardError 
-  end 
+  end
+  # else 
+  #   raise StandardError 
+  # end
+  begin
+    maybe_fruit
+  rescue StandardError => e
+    raise e
+    puts e
+    retry
+  end
+
 end
 
 def feed_me_a_fruit
@@ -20,7 +29,9 @@ def feed_me_a_fruit
   puts "Feed me a fruit! (Enter the name of a fruit:)"
   maybe_fruit = gets.chomp
   reaction(maybe_fruit) 
-end  
+end
+
+feed_me_a_fruit
 
 # PHASE 4
 class BestFriend
