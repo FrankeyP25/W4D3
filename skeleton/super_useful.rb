@@ -22,41 +22,38 @@ end
 def reaction(maybe_fruit)
   if FRUITS.include?(maybe_fruit)
     puts "OMG, thanks so much for the #{maybe_fruit}!"
+  elsif maybe_fruit == "coffee"
+    raise NoCoffee
   else
-    begin
-      maybe_fruit
-    rescue NotFruit => e
-      raise e.message unless FRUITS.include?(maybe_fruit)
-      puts "I don't like this fruit, give me coffee and I'll let you try again"
-      coffee = gets.chomp
-      retry
-    end
-  # elsif maybe_fruit == "coffee"
-  #   raise NoCoffee
-  # else
-  #   raise NotFruit
+    raise NotFruit
   end
-
-
-  # rescue NoFruit => e
-  #   puts e.message
-  #   retry
-  # end
 end
 
 def feed_me_a_fruit
   puts "Hello, I am a friendly monster. :)"
 
+  begin
   puts "Feed me a fruit! (Enter the name of a fruit:)"
   maybe_fruit = gets.chomp
   reaction(maybe_fruit)
+
+  rescue NoCoffee => e
+    puts e.message
+    retry
+  rescue NotFruit => e
+    puts e.message
+    retry
+  end  
 end
 
-feed_me_a_fruit
+# feed_me_a_fruit
 
 # PHASE 4
 class BestFriend
   def initialize(name, yrs_known, fav_pastime)
+    raise "sorry I dont think we are that close yet" if yrs_known < 5
+    raise "name cannot be empty" if name.empty?
+    raise " fav_pastime cannot be empty" if fav_pastime.empty?
     @name = name
     @yrs_known = yrs_known
     @fav_pastime = fav_pastime
@@ -74,5 +71,8 @@ class BestFriend
     puts "Hey bestie, I made you a friendship bracelet. It says my name, #{@name}, so you never forget me." 
   end
 end
+
+babyShark = BestFriend.new("shark", 6, "singing")
+p babyShark
 
 
